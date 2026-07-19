@@ -1,0 +1,61 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../PackageName",
+          "files": [
+            "Packages/com.uralstech.package-name/Runtime/**/*.cs"
+          ]
+        }
+      ],
+      "dest": "api",
+      "filter": "filterConfig.yml",
+      "allowCompilationErrors": true
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "PackageName",
+      "_appTitle": "PackageName",
+      "_appFooter": "(C) 2026 Urav Advanced Learning Systems Private Limited, licensed under the <a href=\"https://github.com/Uralstech/PackageName/blob/main/LICENSE\">Apache License, Version 2.0</a>.",
+      "_enableSearch": true,
+      "pdf": true,
+      "pdfPrintBackground": true,
+      "pdfTocPage": true
+    },
+    "fileMetadata": {
+      "pdfFileName": {
+        "api/toc.yml": "APIReferenceManual.pdf"
+      }
+    },
+    "sitemap": {
+      "baseUrl": "https://uralstech.github.io/PackageName",
+      "priority": 1.0,
+      "changefreq": "daily"
+    }
+  }
+}

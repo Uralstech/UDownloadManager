@@ -1,0 +1,12 @@
+{
+  "dependencies": {},
+  "scopedRegistries": [
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.uralstech"
+      ]
+    }
+  ]
+}
