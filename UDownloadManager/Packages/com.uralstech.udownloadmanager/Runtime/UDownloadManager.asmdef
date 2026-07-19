@@ -1,6 +1,6 @@
 {
-    "name": "PackageName",
-    "rootNamespace": "Uralstech.PackageName",
+    "name": "UDownloadManager",
+    "rootNamespace": "Uralstech.UDownloadManager",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

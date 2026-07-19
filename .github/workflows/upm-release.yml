@@ -36,17 +36,17 @@ jobs:
 
     - name: Copy PDFs
       run: |
-        mkdir -p "PackageName/Packages/com.uralstech.package-name/Documentation~"
-        cp -f "Documentation/_site/api/APIReferenceManual.pdf" "PackageName/Packages/com.uralstech.package-name/Documentation~"
-        cp -f "Documentation/_site/docs/Documentation.pdf" "PackageName/Packages/com.uralstech.package-name/Documentation~"
+        mkdir -p "UDownloadManager/Packages/com.uralstech.udownloadmanager/Documentation~"
+        cp -f "Documentation/_site/api/APIReferenceManual.pdf" "UDownloadManager/Packages/com.uralstech.udownloadmanager/Documentation~"
+        cp -f "Documentation/_site/docs/Documentation.pdf" "UDownloadManager/Packages/com.uralstech.udownloadmanager/Documentation~"
     
     - name: Commit Updated PDFs
       run: |
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
         
-        git add "PackageName/Packages/com.uralstech.package-name/Documentation~/APIReferenceManual.pdf"
-        git add "PackageName/Packages/com.uralstech.package-name/Documentation~/Documentation.pdf"
+        git add "UDownloadManager/Packages/com.uralstech.udownloadmanager/Documentation~/APIReferenceManual.pdf"
+        git add "UDownloadManager/Packages/com.uralstech.udownloadmanager/Documentation~/Documentation.pdf"
 
         git diff --cached --quiet || (
           git commit -m "[skip actions] Update documentation PDFs."
@@ -68,5 +68,5 @@ jobs:
           organization-id: ${{ secrets.UNITY_ORG_ID }}
           upm-service-account-key-id: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_ID }}
           upm-service-account-key-secret: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_SECRET }}
-          package-json: 'PackageName/Packages/com.uralstech.package-name/package.json'
+          package-json: 'UDownloadManager/Packages/com.uralstech.udownloadmanager/package.json'
           split-upm-branch: 'upm'

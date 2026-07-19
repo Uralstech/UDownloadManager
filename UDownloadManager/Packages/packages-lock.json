@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.uralstech.package-name": {
-      "version": "file:com.uralstech.package-name",
+    "com.uralstech.udownloadmanager": {
+      "version": "file:com.uralstech.udownloadmanager",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

@@ -4,9 +4,9 @@
     {
       "src": [
         {
-          "src": "../PackageName",
+          "src": "../UDownloadManager",
           "files": [
-            "Packages/com.uralstech.package-name/Runtime/**/*.cs"
+            "Packages/com.uralstech.udownloadmanager/Runtime/**/*.cs"
           ]
         }
       ],
@@ -39,9 +39,9 @@
       "modern"
     ],
     "globalMetadata": {
-      "_appName": "PackageName",
-      "_appTitle": "PackageName",
-      "_appFooter": "(C) 2026 Urav Advanced Learning Systems Private Limited, licensed under the <a href=\"https://github.com/Uralstech/PackageName/blob/main/LICENSE\">Apache License, Version 2.0</a>.",
+      "_appName": "UDownloadManager",
+      "_appTitle": "UDownloadManager",
+      "_appFooter": "(C) 2026 Urav Advanced Learning Systems Private Limited, licensed under the <a href=\"https://github.com/Uralstech/UDownloadManager/blob/main/LICENSE\">Apache License, Version 2.0</a>.",
       "_enableSearch": true,
       "pdf": true,
       "pdfPrintBackground": true,
@@ -53,7 +53,7 @@
       }
     },
     "sitemap": {
-      "baseUrl": "https://uralstech.github.io/PackageName",
+      "baseUrl": "https://uralstech.github.io/UDownloadManager",
       "priority": 1.0,
       "changefreq": "daily"
     }
