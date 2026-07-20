@@ -19,7 +19,7 @@
     "url": "https://github.com/Uralstech"
   },
   "dependencies": {
-    "com.uralstech.utils.singleton": "1.2.2",
+    "com.uralstech.utils.singleton": "1.2.3",
     "com.unity.modules.androidjni": "1.0.0"
   }
 }
