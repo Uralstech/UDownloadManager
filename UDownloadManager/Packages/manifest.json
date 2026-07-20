@@ -1,5 +1,7 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.ide.rider": "3.0.40"
+  },
   "scopedRegistries": [
     {
       "name": "OpenUPM",

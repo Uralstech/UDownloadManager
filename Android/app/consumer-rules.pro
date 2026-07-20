@@ -1,0 +1,2 @@
+-keep class com.uralstech.udownloadmanager.** { *; }
+-keep class android.app.DownloadManager$Request { *; }

@@ -1,22 +1,25 @@
 {
-    "name": "com.uralstech.udownloadmanager",
-    "displayName": "UDownloadManager",
-    "description": "A Unity package for using Android's DownloadManager.",
-    "keywords": [],
-    "version": "1.0.0-preview.1",
-    "unity": "6000.0",
-    "hideInEditor": false,
-    "documentationUrl": "https://uralstech.github.io/UDownloadManager/",
-    "changelogUrl": "https://github.com/Uralstech/UDownloadManager/releases",
-    "licensesUrl": "https://github.com/Uralstech/UDownloadManager/blob/master/LICENSE",
-    "license": "Apache-2.0",
-    "repository": {
-      "type": "git",
-      "repository": "https://github.com/Uralstech/UDownloadManager.git"
-    },
-    "author": {
-      "name": "Udayshankar Ravikumar",
-      "url": "https://github.com/Uralstech"
-    },
-    "dependencies": { }
+  "name": "com.uralstech.udownloadmanager",
+  "displayName": "UDownloadManager",
+  "description": "A Unity package for using Android's DownloadManager.",
+  "keywords": [],
+  "version": "1.0.0-preview.1",
+  "unity": "6000.0",
+  "hideInEditor": false,
+  "documentationUrl": "https://uralstech.github.io/UDownloadManager/",
+  "changelogUrl": "https://github.com/Uralstech/UDownloadManager/releases",
+  "licensesUrl": "https://github.com/Uralstech/UDownloadManager/blob/master/LICENSE",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "repository": "https://github.com/Uralstech/UDownloadManager.git"
+  },
+  "author": {
+    "name": "Udayshankar Ravikumar",
+    "url": "https://github.com/Uralstech"
+  },
+  "dependencies": {
+    "com.uralstech.utils.singleton": "1.2.2",
+    "com.unity.modules.androidjni": "1.0.0"
   }
+}
