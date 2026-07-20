@@ -661,6 +661,7 @@ namespace Uralstech.UDownloadManager.Native
             /// <summary>Move the cursor to the first row.</summary>
             /// <remarks>This method will return <see langword="false"/> if the cursor is empty.</remarks>
             /// <param name="native">The native object.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static bool MoveToFirst(AndroidJavaObject native)
             {
                 ThrowIfNotAndroid();
@@ -673,6 +674,7 @@ namespace Uralstech.UDownloadManager.Native
             /// already past the last entry in the result set.
             /// </remarks>
             /// <param name="native">The native object.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static bool MoveToNext(AndroidJavaObject native)
             {
                 ThrowIfNotAndroid();
@@ -682,6 +684,7 @@ namespace Uralstech.UDownloadManager.Native
             /// <summary>Returns the zero-based index for the given column name, or -1 if the column doesn't exist.</summary>
             /// <param name="native">The native object.</param>
             /// <param name="columnName">The column name.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static int GetColumnIndex(AndroidJavaObject native, string columnName)
             {
                 ThrowIfNotAndroid();
@@ -696,6 +699,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </summary>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static FieldType GetType(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -705,6 +709,7 @@ namespace Uralstech.UDownloadManager.Native
             /// <summary>Returns the value of the requested column as a byte array.</summary>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static sbyte[] GetBlob(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -720,6 +725,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static double GetDouble(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -735,6 +741,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static float GetFloat(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -744,12 +751,13 @@ namespace Uralstech.UDownloadManager.Native
             /// <summary>Returns the value of the requested column as an int.</summary>
             /// <remarks>
             /// The result and whether this method throws an exception when the column value
-            /// is <see langworx="null"/>, the column type is not an integral type, or the
+            /// is <see langword="null"/>, the column type is not an integral type, or the
             /// integer value is outside the range [<c>Integer.MIN_VALUE</c>, <c>Integer.MAX_VALUE</c>]
             /// is implementation-defined.
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static int GetInt(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -765,6 +773,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static short GetShort(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -780,6 +789,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static long GetLong(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -794,6 +804,7 @@ namespace Uralstech.UDownloadManager.Native
             /// </remarks>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static string GetString(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -803,6 +814,7 @@ namespace Uralstech.UDownloadManager.Native
             /// <summary>Returns <see langword="true"/> if the value in the indicated column is <see langword="null"/>.</summary>
             /// <param name="native">The native object.</param>
             /// <param name="columnIndex">The zero-based index of the target column.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static bool IsNull(AndroidJavaObject native, int columnIndex)
             {
                 ThrowIfNotAndroid();
@@ -811,6 +823,7 @@ namespace Uralstech.UDownloadManager.Native
 
             /// <summary>Returns <see langword="true"/> if the cursor is closed.</summary>
             /// <param name="native">The native object.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static bool IsClosed(AndroidJavaObject native)
             {
                 ThrowIfNotAndroid();
@@ -819,6 +832,7 @@ namespace Uralstech.UDownloadManager.Native
             
             /// <summary>Closes the Cursor, releasing all of its resources and making it completely invalid.</summary>
             /// <param name="native">The native object.</param>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static void Close(AndroidJavaObject native)
             {
                 ThrowIfNotAndroid();
