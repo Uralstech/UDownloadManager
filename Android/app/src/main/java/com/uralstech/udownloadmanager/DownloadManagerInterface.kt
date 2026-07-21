@@ -80,12 +80,4 @@ class DownloadManagerInterface private constructor(private val context: Context,
 
         return downloadManager.query(query)
     }
-
-    fun getUriForDownloadedFile(id: Long) : Uri? {
-        return downloadManager.getUriForDownloadedFile(id)
-    }
-
-    fun getMimeTypeForDownloadedFile(id: Long) : String? {
-        return downloadManager.getMimeTypeForDownloadedFile(id)
-    }
 }
