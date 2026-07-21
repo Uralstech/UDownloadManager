@@ -112,29 +112,28 @@ namespace Uralstech.UDownloadManager
                 return Array.Empty<AndroidDownload>();
         
             List<AndroidDownload> downloads = new();
+            int idIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Id);
+            if (idIdx == -1)
+                throw new InvalidOperationException("ID column not found.");
         
+            int statusIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Status);
+            if (statusIdx == -1)
+                throw new InvalidOperationException("Status column not found.");
+        
+            int uriIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Uri);
+            int pathIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.LocalUri);
+            int mediaTypeIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.MediaType);
+            int titleIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Title);
+            int descriptionIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Description);
+            int totalSizeIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.TotalSizeBytes);
+            int downloadedSoFarIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.BytesDownloadedSoFar);
+            int lastModifiedIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.LastModifiedTimestamp);
+            int reasonIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Reason);
+
             do
             {
-                int idIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Id);
-                if (idIdx == -1)
-                    throw new InvalidOperationException("ID column not found.");
-        
-                int statusIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Status);
-                if (statusIdx == -1)
-                    throw new InvalidOperationException("Status column not found.");
-        
                 long androidId = AndroidInterop.DownloadCursor.GetLong(cursor, idIdx);
                 int statusValue = AndroidInterop.DownloadCursor.GetInt(cursor, statusIdx);
-        
-                int uriIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Uri);
-                int pathIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.LocalUri);
-                int mediaTypeIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.MediaType);
-                int titleIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Title);
-                int descriptionIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Description);
-                int totalSizeIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.TotalSizeBytes);
-                int downloadedSoFarIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.BytesDownloadedSoFar);
-                int lastModifiedIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.LastModifiedTimestamp);
-                int reasonIdx = AndroidInterop.DownloadCursor.GetColumnIndex(cursor, AndroidInterop.DownloadCursor.Columns.Reason);
         
                 string uri = ReadString(cursor, uriIdx) ?? string.Empty;
                 string? path = ReadString(cursor, pathIdx);

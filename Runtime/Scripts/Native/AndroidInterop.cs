@@ -765,8 +765,9 @@ namespace Uralstech.UDownloadManager.Native
         
         private static void ThrowIfNotAndroid()
         {
-            if (Application.platform != RuntimePlatform.Android)
-                throw new PlatformNotSupportedException();
+#if !UNITY_ANDROID || UNITY_EDITOR
+            throw new PlatformNotSupportedException();
+#endif
         }
     }
 }

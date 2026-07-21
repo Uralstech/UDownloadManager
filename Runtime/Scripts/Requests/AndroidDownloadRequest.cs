@@ -40,8 +40,12 @@ namespace Uralstech.UDownloadManager
         /// <param name="header">HTTP header name</param>
         /// <param name="value">Header value.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void AddRequestHeader(string header, string value) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void AddRequestHeader(string header, string value)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.AddRequestHeader(_native, header, value);
+        }
 
         /// <summary>
         /// Restrict the types of networks over which this download may proceed.
@@ -50,8 +54,12 @@ namespace Uralstech.UDownloadManager
         /// </summary>
         /// <param name="networkTypes">Any combination of <see cref="NetworkTypes"/>.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetAllowedNetworkTypes(NetworkTypes networkTypes) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetAllowedNetworkTypes(NetworkTypes networkTypes)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetAllowedNetworkTypes(_native, networkTypes);
+        }
 
         /// <summary>
         /// Set whether this download may proceed over a metered network connection.
@@ -59,8 +67,12 @@ namespace Uralstech.UDownloadManager
         /// </summary>
         /// <param name="allow">Whether this download may proceed over a metered connection.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetAllowedOverMetered(bool allow) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetAllowedOverMetered(bool allow)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetAllowedOverMetered(_native, allow);
+        }
 
         /// <summary>
         /// Set whether this download may proceed over a roaming connection.
@@ -68,8 +80,12 @@ namespace Uralstech.UDownloadManager
         /// </summary>
         /// <param name="allow">Whether to allow a roaming connection to be used.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetAllowedOverRoaming(bool allow) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetAllowedOverRoaming(bool allow)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetAllowedOverRoaming(_native, allow);
+        }
 
         /// <summary>
         /// Set the title of this download, to be displayed in notifications (if enabled).
@@ -78,16 +94,24 @@ namespace Uralstech.UDownloadManager
         /// </summary>
         /// <param name="title">The title.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetTitle(string title) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetTitle(string title)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetTitle(_native, title);
+        }
 
         /// <summary>
         /// Set a description of this download, to be displayed in notifications (if enabled).
         /// </summary>
         /// <param name="description">The description.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetDescription(string description) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetDescription(string description)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetDescription(_native, description);
+        }
 
         /// <summary>
         /// Set the local destination for the downloaded file to a path within the application's
@@ -97,8 +121,12 @@ namespace Uralstech.UDownloadManager
         /// <param name="subPath">The path within the external directory, including the destination filename.</param>
         /// <param name="dirType">The directory type to pass to <c>Context.getExternalFilesDir(String)</c></param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetDestinationInExternalFilesDir(string subPath, string? dirType = null) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetDestinationInExternalFilesDir(string subPath, string? dirType = null)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetDestinationInExternalFilesDir(_native, subPath, dirType);
+        }
 
         /// <summary>
         /// Set the local destination for the downloaded file to a path within the public external
@@ -113,8 +141,12 @@ namespace Uralstech.UDownloadManager
         /// <param name="subPath">The path within the external directory, including the destination filename.</param>
         /// <param name="dirType">The directory type to pass to <c>Environment.getExternalStoragePublicDirectory(String)</c></param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetDestinationInExternalPublicDir(string subPath, string dirType) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetDestinationInExternalPublicDir(string subPath, string dirType)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetDestinationInExternalPublicDir(_native, subPath, dirType);
+        }
 
         /// <summary>
         /// Set the destination for the downloaded file. Must be an absolute path on external storage,
@@ -135,8 +167,10 @@ namespace Uralstech.UDownloadManager
         /// </remarks>
         /// <param name="path">The path.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
+        /// <exception cref="ObjectDisposedException"/>
         public void SetDestination(string path)
         {
+            ThrowIfDisposed();
             using AndroidJavaObject uri = AndroidInterop.Uri.CreateInstance($"file:///{path.TrimStart('/')}");
             AndroidInterop.DownloadManagerRequest.SetDestinationUri(_native, uri);
         }
@@ -147,9 +181,13 @@ namespace Uralstech.UDownloadManager
         /// </summary>
         /// <param name="mimeType">The MIME type.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetMimeType(string mimeType) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetMimeType(string mimeType)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetMimeType(_native, mimeType);
-    
+        }
+
         /// <summary>
         /// Control whether a system notification is posted by the download manager
         /// while this download is running or when it is completed. If enabled,
@@ -163,18 +201,26 @@ namespace Uralstech.UDownloadManager
         /// </remarks>
         /// <param name="visibility">The notification visibility.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetNotificationVisibility(NotificationVisibility visibility) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetNotificationVisibility(NotificationVisibility visibility)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetNotificationVisibility(_native, visibility);
-        
+        }
+
         /// <summary>
         /// Specify that to run this download, the device needs to be plugged in.
         /// This defaults to <see langword="false"/>.
         /// </summary>
         /// <param name="requiresCharging">Whether the device is plugged in.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetRequiresCharging(bool requiresCharging) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetRequiresCharging(bool requiresCharging)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetRequiresCharging(_native, requiresCharging);
-        
+        }
+
         /// <summary>
         /// Specify that to run, the download needs the device to be in idle mode.
         /// This defaults to <see langword="false"/>.
@@ -185,9 +231,13 @@ namespace Uralstech.UDownloadManager
         /// </remarks>
         /// <param name="requiresDeviceIdle">Whether the device need be within an idle maintenance window.</param>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public void SetRequiresDeviceIdle(bool requiresDeviceIdle) =>
+        /// <exception cref="ObjectDisposedException"/>
+        public void SetRequiresDeviceIdle(bool requiresDeviceIdle)
+        {
+            ThrowIfDisposed();
             AndroidInterop.DownloadManagerRequest.SetRequiresDeviceIdle(_native, requiresDeviceIdle);
-        
+        }
+
         /// <summary>Disposes native Android instance.</summary>
         public override void Dispose()
         {
@@ -195,6 +245,12 @@ namespace Uralstech.UDownloadManager
 
             _native.Dispose();
             _disposed = true;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(AndroidDownloadRequest));
         }
     }
 }
