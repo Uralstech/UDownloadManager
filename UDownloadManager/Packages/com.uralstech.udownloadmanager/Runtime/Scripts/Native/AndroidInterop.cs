@@ -29,74 +29,55 @@ namespace Uralstech.UDownloadManager.Native
         {
             /// <summary>None, invalid status.</summary>
             None = 0,
-            
+        
             /// <summary>The download is waiting to start.</summary>
             Pending = 1,
-            
+        
             /// <summary>The download is currently running.</summary>
             Running = 2,
-            
+        
             /// <summary>The download is waiting to retry or resume.</summary>
             Paused = 4,
-            
+        
             /// <summary>The download has successfully completed.</summary>
             Successful = 8,
-            
+        
             /// <summary>The download has failed (and will not be retried).</summary>
             Failed = 16,
         }
 
-        /// <summary>Download failure reasons.</summary>
-        public enum DownloadFailReason
+        /// <summary>Converts an Android download status to a global download status.</summary>
+        public static Uralstech.UDownloadManager.DownloadStatus ToDownloadStatus(this DownloadStatus status)
         {
-            /// <summary>Some possibly transient error occurred but we can't resume the download.</summary>
-            CannotResume = 1008,
-            
-            /// <summary>No external storage device was found. Typically, this is because the SD card is not mounted.</summary>
-            DeviceNotFound = 1007,
-            
-            /// <summary>The requested destination file already exists (the download manager will not overwrite an existing file).</summary>
-            FileAlreadyExists = 1009,
-            
-            /// <summary>A storage issue arose which doesn't fit under any other error code.</summary>
-            FileError = 1001,
-            
-            /// <summary>An error receiving or processing data occurred at the HTTP level.</summary>
-            HttpDataError = 1004,
-
-            /// <summary>There was insufficient storage space. Typically, this is because the SD card is full.</summary>
-            InsufficientSpace = 1006,
-            
-            /// <summary>There were too many redirects.</summary>
-            TooManyRedirects = 1005,
-            
-            /// <summary>An HTTP code was received that download manager can't handle.</summary>
-            UnhandledHttpCode = 1002,
-            
-            /// <summary>The download has completed with an error that doesn't fit under any other error code.</summary>
-            Unknown = 1000,
+            Uralstech.UDownloadManager.DownloadStatus globalStatus = 0;
+            if (status.HasFlag(DownloadStatus.Pending))
+                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Pending;
+            if (status.HasFlag(DownloadStatus.Running))
+                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Running;
+            if (status.HasFlag(DownloadStatus.Paused))
+                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Paused;
+            if (status.HasFlag(DownloadStatus.Successful))
+                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Successful;
+            if (status.HasFlag(DownloadStatus.Failed))
+                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Failed;
+            return globalStatus;
         }
 
-        /// <summary>Download pause reasons.</summary>
-        public enum DownloadPauseReason
+        /// <summary>Converts a global download status to an Android download status.</summary
+        public static DownloadStatus ToAndroidDownloadStatus(this Uralstech.UDownloadManager.DownloadStatus status)
         {
-            /// <summary>
-            /// The download exceeds a size limit for downloads over the mobile network
-            /// and the download manager is waiting for a Wi-Fi connection to proceed.
-            /// </summary>
-            QueuedForWiFi = 3,
-            
-            /// <summary>The download is paused for some other reason.</summary>
-            Unknown = 4,
-            
-            /// <summary>The download is waiting for network connectivity to proceed.</summary>
-            WaitingForNetwork = 2,
-            
-            /// <summary>
-            /// The download is paused because some network error occurred and the
-            /// download manager is waiting before retrying the request.
-            /// </summary>
-            WaitingToRetry = 1,
+            DownloadStatus globalStatus = 0;
+            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Pending))
+                globalStatus |= DownloadStatus.Pending;
+            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Running))
+                globalStatus |= DownloadStatus.Running;
+            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Paused))
+                globalStatus |= DownloadStatus.Paused;
+            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Successful))
+                globalStatus |= DownloadStatus.Successful;
+            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Failed))
+                globalStatus |= DownloadStatus.Failed;
+            return globalStatus;
         }
         
         /// <summary>The main native interface.</summary>
@@ -275,65 +256,15 @@ namespace Uralstech.UDownloadManager.Native
                 return native.Call<AndroidJavaObject>("query",
                     ids ?? Array.Empty<long>(), (int)status);
             }
-
-            /// <summary>
-            /// Returns the <c>Uri</c> of the given downloaded file id, if the file
-            /// is downloaded successfully. Otherwise, <see langword="null"/> is returned.
-            /// </summary>
-            /// <param name="native">The native plugin instance.</param>
-            /// <param name="id">The ID of the download.</param>
-            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-            public static AndroidJavaObject? GetUriForDownloadedFile(AndroidJavaObject native, long id)
-            {
-                ThrowIfNotAndroid();
-                return native.Call<AndroidJavaObject?>("getUriForDownloadedFile", id);
-            }
-
-            /// <summary>
-            /// Returns the media type of the given downloaded file id, if the file
-            /// was downloaded successfully. Otherwise, <see langword="null"/> is returned.
-            /// </summary>
-            /// <param name="native">The native plugin instance.</param>
-            /// <param name="id">The ID of the download.</param>
-            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-            public static string? GetMimeTypeForDownloadedFile(AndroidJavaObject native, long id)
-            {
-                ThrowIfNotAndroid();
-                return native.Call<string?>("getMimeTypeForDownloadedFile", id);
-            }
         }
         
         /// <summary>Interface for <a href="https://developer.android.com/reference/android/app/DownloadManager.Request"><c>DownloadManager.Request</c></a>.</summary>
         public static class DownloadManagerRequest
         {
-            /// <summary>Allowed network types for a download.</summary>
-            [Flags]
-            public enum NetworkTypes
-            {
-                /// <summary>A Mobile data connection.</summary>
-                Mobile = 1,
-                
-                /// <summary>A Wi-Fi data connection.</summary>
-                WiFi = 2,
-            }
-
-            /// <summary>Download notification visibility settings.</summary>
-            public enum NotificationVisibility
-            {
-                /// <summary>This download is visible but only shows in the notifications while it's in progress.</summary>
-                Visible = 0,
-                
-                /// <summary>This download is visible and shows in the notifications while in progress and after completion.</summary>
-                VisibleNotifyCompleted = 1,
-                
-                /// <summary>This download doesn't show in the UI or in the notifications.</summary>
-                Hidden = 2,
-            }
-            
             /// <summary>Creates a new Request object.</summary>
             /// <remarks>The returned <see cref="AndroidJavaObject"/> should be disposed when no longer needed.</remarks>
             /// <param name="uri">The HTTP or HTTPS URI to download.</param>
-            /// <returns>A new instance of the Request.</returns>
+            /// <returns>A new instance of Request.</returns>
             /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static AndroidJavaObject CreateInstance(AndroidJavaObject uri)
             {
@@ -543,7 +474,7 @@ namespace Uralstech.UDownloadManager.Native
             /// This defaults to <see langword="false"/>.
             /// </summary>
             /// <param name="native">The native object.</param>
-            /// <param name="requiresCharging">Whether or not the device is plugged in.</param>
+            /// <param name="requiresCharging">Whether the device is plugged in.</param>
             /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static void SetRequiresCharging(AndroidJavaObject native,
                 bool requiresCharging)
@@ -562,7 +493,7 @@ namespace Uralstech.UDownloadManager.Native
             /// the device is not in use, and has not been in use for some time.
             /// </remarks>
             /// <param name="native">The native object.</param>
-            /// <param name="requiresDeviceIdle">Whether or not the device need be within an idle maintenance window.</param>
+            /// <param name="requiresDeviceIdle">Whether the device need be within an idle maintenance window.</param>
             /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
             public static void SetRequiresDeviceIdle(AndroidJavaObject native,
                 bool requiresDeviceIdle)
@@ -573,7 +504,7 @@ namespace Uralstech.UDownloadManager.Native
             }
         }
         
-        /// <summary>Interface for <a href="https://developer.android.com/reference/android/database/Cursor"><c>Cursor</c></a>.</summary>
+        /// <summary>Partial interface for <a href="https://developer.android.com/reference/android/database/Cursor"><c>Cursor</c></a>.</summary>
         public static class DownloadCursor
         {
             /// <summary>Possible columns for the cursor.</summary>
@@ -648,7 +579,7 @@ namespace Uralstech.UDownloadManager.Native
                 public const string Status = "status";
             }
 
-            /// <summary>Data type of a column field.</summary>
+            /// <summary>Data type of column field.</summary>
             public enum FieldType
             {
                 Blob = 4,
@@ -837,6 +768,24 @@ namespace Uralstech.UDownloadManager.Native
             {
                 ThrowIfNotAndroid();
                 native.Call("close");
+            }
+        }
+        
+        /// <summary>Partial interface for <a href="https://developer.android.com/reference/android/net/Uri"><c>Uri</c></a>.</summary>
+        public static class Uri
+        {
+            /// <summary>Creates a new Uri object.</summary>
+            /// <remarks>The returned <see cref="AndroidJavaObject"/> should be disposed when no longer needed.</remarks>
+            /// <param name="uri">The HTTP or HTTPS URI.</param>
+            /// <returns>A new instance of Uri.</returns>
+            /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
+            public static AndroidJavaObject CreateInstance(string uri)
+            {
+                ThrowIfNotAndroid();
+
+                const string ClassName = "android.net.Uri";
+                using AndroidJavaClass @class = new(ClassName);
+                return @class.Call<AndroidJavaObject>("parse", uri);
             }
         }
         
