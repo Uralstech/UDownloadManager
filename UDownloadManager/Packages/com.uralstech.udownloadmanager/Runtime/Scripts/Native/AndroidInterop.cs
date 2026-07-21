@@ -759,7 +759,7 @@ namespace Uralstech.UDownloadManager.Native
 
                 const string ClassName = "android.net.Uri";
                 using AndroidJavaClass @class = new(ClassName);
-                return @class.Call<AndroidJavaObject>("parse", uri);
+                return @class.CallStatic<AndroidJavaObject>("parse", uri);
             }
         }
         

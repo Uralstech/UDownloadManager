@@ -1,16 +1,3 @@
-# Quick Start
-
-The example code provided in this quick start guide is for educational and demonstration purposes only. It may not represent best practices for production use. This quick start was last updated for **UDownloadManager v1.0.0-preview.1**.
-
-## Breaking Changes Notice
-
-If you've just updated the package, it is recommended to check the [*changelogs*](https://github.com/Uralstech/UDownloadManager/releases) for information on breaking changes.
-
-## Sample
-
-This sample demonstrates how an app can download Gemma 4 E2B at runtime and used with UAI.LiteRTLM.
-
-```csharp
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -221,4 +208,3 @@ public sealed class DownloadModelExample : MonoBehaviour
 
     #endregion
 }
-```

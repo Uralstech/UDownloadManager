@@ -15,6 +15,20 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.mobile.android-logcat": {
+      "version": "1.4.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.uralstech.uai.litertlm": {
+      "version": "2.1.0-preview.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.uralstech.udownloadmanager": {
       "version": "file:com.uralstech.udownloadmanager",
       "depth": 0,
