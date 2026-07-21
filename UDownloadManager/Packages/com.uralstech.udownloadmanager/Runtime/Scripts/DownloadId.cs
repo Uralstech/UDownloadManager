@@ -29,12 +29,24 @@ namespace Uralstech.UDownloadManager
         
         /// <summary>Gets the Android-native ID.</summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public long ToAndroidId() => Application.platform == RuntimePlatform.Android
-            ? _androidId : throw new PlatformNotSupportedException();
+        public long ToAndroidId()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return _androidId;
+#else
+            throw new PlatformNotSupportedException();
+#endif
+        }
 
         /// <summary>Creates a <see cref="DownloadId"/> from an Android-native ID.</summary>
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on a runtime other than Android.</exception>
-        public static DownloadId FromAndroidId(long id) => Application.platform == RuntimePlatform.Android
-            ? new DownloadId(id) : throw new PlatformNotSupportedException();
+        public static DownloadId FromAndroidId(long id)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return new DownloadId(id);
+#else
+            throw new PlatformNotSupportedException();
+#endif
+        }
     }
 }

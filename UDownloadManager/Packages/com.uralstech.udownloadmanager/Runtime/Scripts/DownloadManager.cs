@@ -25,7 +25,11 @@ namespace Uralstech.UDownloadManager
     [AddComponentMenu("Uralstech/UDownloadManager/DownloadManager")]
     public sealed class DownloadManager : Singleton<DownloadManager>
     {
-        private static readonly bool s_isAndroid = Application.platform == RuntimePlatform.Android;
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private const bool IsAndroid = true;
+#else
+        private const bool IsAndroid = false;
+#endif
 
         /// <summary>Invoked when a download has completed, with its ID.</summary>
         public event Action<DownloadId>? OnDownloadCompleted;
@@ -48,7 +52,7 @@ namespace Uralstech.UDownloadManager
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            if (!s_isAndroid) return;
+            if (!IsAndroid) return;
             
             _androidCallbacks = new AndroidInterop.DownloadManagerInterface.Callbacks();
             _androidCallbacks.OnDownloadCompleted += OnDownloadCompleteAndroid;
@@ -60,7 +64,7 @@ namespace Uralstech.UDownloadManager
 
         private void OnDestroy()
         {
-            if (!s_isAndroid) return;
+            if (!IsAndroid) return;
             _androidNative?.Dispose();
             
             if (_androidCallbacks == null) return;
@@ -77,7 +81,7 @@ namespace Uralstech.UDownloadManager
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on an unsupported platform.</exception>
         public long GetMobileDownloadSizeLimit()
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 return AndroidInterop.DownloadManagerInterface.GetMaxBytesOverMobile(_androidNative!) ?? -1;
 
             throw new PlatformNotSupportedException();
@@ -91,7 +95,7 @@ namespace Uralstech.UDownloadManager
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on an unsupported platform.</exception>
         public long GetRecommendedMobileDownloadSizeLimit()
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 return AndroidInterop.DownloadManagerInterface.GetRecommendedMaxBytesOverMobile(_androidNative!) ?? -1;
 
             throw new PlatformNotSupportedException();
@@ -110,7 +114,7 @@ namespace Uralstech.UDownloadManager
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on an unsupported platform.</exception>
         public bool TryEnqueueDownload(DownloadRequest request, [NotNullWhen(true)] out DownloadId? id)
         {
-            if (!s_isAndroid) throw new PlatformNotSupportedException();
+            if (!IsAndroid) throw new PlatformNotSupportedException();
             
             if (request is not AndroidDownloadRequest androidRequest)
                 throw new ArgumentException($"Request must be of type {nameof(AndroidDownloadRequest)} on Android.", nameof(request));
@@ -137,7 +141,7 @@ namespace Uralstech.UDownloadManager
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on an unsupported platform.</exception>
         public int CancelDownloads(params DownloadId[] ids)
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 return AndroidInterop.DownloadManagerInterface.Remove(_androidNative!,
                     Array.ConvertAll(ids, static id => id.ToAndroidId()));
             
@@ -150,29 +154,36 @@ namespace Uralstech.UDownloadManager
         /// <exception cref="PlatformNotSupportedException">Thrown if this method is called on an unsupported platform.</exception>
         public IReadOnlyList<Download> QueryDownloads(DownloadFilter? filter = null)
         {
-            if (s_isAndroid)
-                return AndroidDownload.FromAndroidCursor(
-                    AndroidInterop.DownloadManagerInterface.Query(_androidNative!,
-                        filter?.Ids, filter?.Status ?? default));
+            if (!IsAndroid) throw new PlatformNotSupportedException();
             
-            throw new PlatformNotSupportedException();
+            using AndroidJavaObject cursor = AndroidInterop.DownloadManagerInterface.Query(_androidNative!,
+                filter?.Ids, filter?.Status ?? default);
+
+            try
+            {
+                return AndroidDownload.FromAndroidCursor(cursor);
+            }
+            finally
+            {
+                AndroidInterop.DownloadCursor.Close(cursor);
+            }
         }
         
         private void OnDownloadCompleteAndroid(long id)
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 OnDownloadCompleted?.ForgetOnMainThread(DownloadId.FromAndroidId(id));
         }
 
         private void OnDownloadNotificationClickedAndroid(long[] ids)
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 OnDownloadNotificationClicked?.ForgetOnMainThread(Array.ConvertAll(ids, DownloadId.FromAndroidId));
         }
 
         private void OnViewDownloadsAndroid(bool sortBySize)
         {
-            if (s_isAndroid)
+            if (IsAndroid)
                 OnViewDownloads?.ForgetOnMainThread(sortBySize);
         }
     }
