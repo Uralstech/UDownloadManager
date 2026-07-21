@@ -47,38 +47,12 @@ namespace Uralstech.UDownloadManager.Native
         }
 
         /// <summary>Converts an Android download status to a global download status.</summary>
-        public static Uralstech.UDownloadManager.DownloadStatus ToDownloadStatus(this DownloadStatus status)
-        {
-            Uralstech.UDownloadManager.DownloadStatus globalStatus = 0;
-            if (status.HasFlag(DownloadStatus.Pending))
-                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Pending;
-            if (status.HasFlag(DownloadStatus.Running))
-                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Running;
-            if (status.HasFlag(DownloadStatus.Paused))
-                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Paused;
-            if (status.HasFlag(DownloadStatus.Successful))
-                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Successful;
-            if (status.HasFlag(DownloadStatus.Failed))
-                globalStatus |= Uralstech.UDownloadManager.DownloadStatus.Failed;
-            return globalStatus;
-        }
+        public static Uralstech.UDownloadManager.DownloadStatus ToDownloadStatus(this DownloadStatus status) =>
+            (Uralstech.UDownloadManager.DownloadStatus)status;
 
-        /// <summary>Converts a global download status to an Android download status.</summary
-        public static DownloadStatus ToAndroidDownloadStatus(this Uralstech.UDownloadManager.DownloadStatus status)
-        {
-            DownloadStatus globalStatus = 0;
-            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Pending))
-                globalStatus |= DownloadStatus.Pending;
-            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Running))
-                globalStatus |= DownloadStatus.Running;
-            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Paused))
-                globalStatus |= DownloadStatus.Paused;
-            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Successful))
-                globalStatus |= DownloadStatus.Successful;
-            if (status.HasFlag(Uralstech.UDownloadManager.DownloadStatus.Failed))
-                globalStatus |= DownloadStatus.Failed;
-            return globalStatus;
-        }
+        /// <summary>Converts a global download status to an Android download status.</summary>
+        public static DownloadStatus ToAndroidDownloadStatus(this Uralstech.UDownloadManager.DownloadStatus status) =>
+            (DownloadStatus)status;
         
         /// <summary>The main native interface.</summary>
         public static class DownloadManagerInterface
