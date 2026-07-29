@@ -7,7 +7,7 @@ A Unity package for using Android's DownloadManager.
 
 ## Installation
 
-This package was designed for Unity 6.0 and above. Built and tested in Unity 6.4.
+This package was designed for Unity 6.0 and above. Built and tested in Unity 6.5.
 
 ### OpenUPM
 

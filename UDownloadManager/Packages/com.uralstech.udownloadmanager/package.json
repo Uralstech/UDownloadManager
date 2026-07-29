@@ -3,7 +3,7 @@
   "displayName": "UDownloadManager",
   "description": "A Unity package for using Android's DownloadManager.",
   "keywords": [],
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0-preview.2",
   "unity": "6000.0",
   "hideInEditor": false,
   "documentationUrl": "https://uralstech.github.io/UDownloadManager/",
@@ -19,7 +19,7 @@
     "url": "https://github.com/Uralstech"
   },
   "dependencies": {
-    "com.uralstech.utils.singleton": "1.2.3",
+    "com.uralstech.utils.singleton": "2.0.0",
     "com.unity.modules.androidjni": "1.0.0"
   }
 }
