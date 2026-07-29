@@ -49,8 +49,9 @@ namespace Uralstech.UDownloadManager
         private AndroidInterop.DownloadManagerInterface.Callbacks? _androidCallbacks;
         private AndroidJavaObject? _androidNative;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             DontDestroyOnLoad(gameObject);
             if (!s_isAndroid) return;
             
